@@ -20,21 +20,22 @@
                             <p class="mb-0">{!! nl2br(e($micropost->content)) !!}</p>
                         </div>
                         <div class='inline-flex'>
-                                @if (Auth::user()->is_favorite($micropost->id))
-                                    {{-- いいねを外すボタンのフォーム --}}
-                                    <form method="POST" action="{{ route('user.unfavorite', $micropost->id) }}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-outline btn-sm normal-case" 
-                                            onclick="return confirm('id = {{ $micropost->id }} のいいねを外します。よろしいですか？')">いいねを外す</button>
-                                    </form>
-                                @else
-                                    {{-- いいねボタンのフォーム --}}
-                                    <form method="POST" action="{{ route('user.favorite', $micropost->id) }}">
-                                        @csrf
-                                        <button type="submit" class="btn btn-accent btn-sm normal-case">いいね</button>
-                                    </form>
-                                @endif
+                            @if (Auth::user()->is_favorite($micropost->id))
+                                {{-- いいねを外すボタンのフォーム --}}
+                                <form method="POST" action="{{ route('user.unfavorite', $micropost->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-outline btn-sm normal-case" 
+                                        onclick="return confirm('id = {{ $micropost->id }} のいいねを外します。よろしいですか？')">いいねを外す</button>
+                                </form>
+                            @else
+                                {{-- いいねボタンのフォーム --}}
+                                <form method="POST" action="{{ route('user.favorite', $micropost->id) }}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-secondary btn-sm normal-case">いいね</button>
+                                </form>
+                            @endif
+                            @if (Auth::id() == $micropost->user_id)
                             {{-- 投稿削除ボタンのフォーム --}}
                             <form method="POST" action="{{ route('microposts.destroy', $micropost->id) }}">
                                 @csrf
@@ -42,6 +43,7 @@
                                 <button type="submit" class="btn btn-error btn-sm normal-case" 
                                     onclick="return confirm('Delete id = {{ $micropost->id }} ?')">Delete</button>
                             </form>
+                            @endif
                         </div>
                     </div>
                 </li>
