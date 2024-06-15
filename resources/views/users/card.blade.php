@@ -6,6 +6,9 @@
         {{-- ユーザーのメールアドレスをもとにGravatarを取得して表示 --}}
         <img src="{{ Gravatar::get($user->email, ['size' => 500]) }}" alt="">
     </figure>
+    <a class="btn btn-outline btn-sm normal-case" href="{{ route('users.edit', $user->id) }}">
+        ユーザー名編集ページ
+    </a>
 </div>
 {{-- フォロー／アンフォローボタン --}}
 @include('user_follow.follow_button')

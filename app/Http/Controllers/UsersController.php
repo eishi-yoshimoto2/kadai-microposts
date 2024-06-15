@@ -40,6 +40,43 @@ class UsersController extends Controller
 
     }
     
+        public function edit($id)
+    {
+        // idの値でメッセージを検索して取得
+        $user = User::findOrFail($id);
+
+        // メッセージ編集ビューでそれを表示
+        if (\Auth::id() === $user->id) {
+            return view('users.edit', [
+                'user' => $user,
+            ]);
+        }
+
+        // トップページへリダイレクトさせる
+        return redirect('/');
+
+    }
+    
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|max:20',
+        ]);
+        
+        // idの値でユーザーを検索して取得
+        $user = User::findOrFail($id);
+        
+        // メッセージを更新
+        if (\Auth::id() === $user->id) {
+            $user->name = $request->name;
+            $user->save();
+            return redirect('/');
+        }
+        
+        // トップページへリダイレクトさせる
+        return redirect('/');
+    }
+    
     /**
      * ユーザーのフォロー一覧ページを表示するアクション。
      *

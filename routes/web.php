@@ -39,7 +39,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('favorites', [UsersController::class, 'favorites'])->name('users.favorites');
     });
 
-    Route::resource('users', UsersController::class, ['only' => ['index', 'show']]);
+    Route::resource('users', UsersController::class, ['only' => ['index', 'show', 'edit', 'update']]);
     Route::resource('microposts', MicropostsController::class, ['only' => ['store', 'destroy', 'edit', 'update']]);
 });
 
