@@ -43,6 +43,43 @@ class MicropostsController extends Controller
         return back();
     }
     
+    public function edit($id)
+    {
+        // idの値でメッセージを検索して取得
+        $micropost = Micropost::findOrFail($id);
+
+        // メッセージ編集ビューでそれを表示
+        if (\Auth::id() === $micropost->user_id) {
+            return view('microposts.edit', [
+                'micropost' => $micropost,
+            ]);
+        }
+
+        // トップページへリダイレクトさせる
+        return redirect('/');
+
+    }
+    
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'content' => 'required',
+        ]);
+        
+        // idの値でメッセージを検索して取得
+        $micropost = Micropost::findOrFail($id);
+        
+        // メッセージを更新
+        if (\Auth::id() === $micropost->user_id) {
+            $micropost->content = $request->content;
+            $micropost->save();
+            return redirect('/');
+        }
+        
+        // トップページへリダイレクトさせる
+        return redirect('/');
+    }
+
     public function destroy(string $id)
     {
         // idの値で投稿を検索して取得
