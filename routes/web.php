@@ -40,7 +40,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::resource('users', UsersController::class, ['only' => ['index', 'show']]);
-    Route::resource('microposts', MicropostsController::class, ['only' => ['store', 'destroy']]);
+    Route::resource('microposts', MicropostsController::class, ['only' => ['store', 'destroy', 'edit', 'update']]);
 });
 
 require __DIR__.'/auth.php';
