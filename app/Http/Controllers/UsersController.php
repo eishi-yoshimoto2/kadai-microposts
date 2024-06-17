@@ -61,6 +61,7 @@ class UsersController extends Controller
     {
         $request->validate([
             'name' => 'required|max:20',
+            'email' => 'required',
         ]);
         
         // idの値でユーザーを検索して取得
@@ -69,6 +70,7 @@ class UsersController extends Controller
         // メッセージを更新
         if (\Auth::id() === $user->id) {
             $user->name = $request->name;
+            $user->email = $request->email;
             $user->save();
             return redirect('/');
         }
